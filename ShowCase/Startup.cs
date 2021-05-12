@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShowCase.Exceptions.Handler;
 
 namespace ShowCase
 {
@@ -39,10 +40,10 @@ namespace ShowCase
             }
             else
             {
-                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseExceptionHandler(ex => ex.Run(ExceptionHandler.Handle));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
