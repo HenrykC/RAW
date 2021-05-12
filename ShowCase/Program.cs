@@ -13,7 +13,16 @@ namespace ShowCase
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = new HostBuilder()
+                .ConfigureAppConfiguration((hostContext, builder) =>
+                {
+                    if (hostContext.HostingEnvironment.IsDevelopment())
+                    {
+                        builder.AddUserSecrets<Program>();
+                    }
+                })
+                .Build();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

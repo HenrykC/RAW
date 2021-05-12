@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShowCase.Exceptions.Handler;
+using ShowCase.Models.Database;
 
 namespace ShowCase
 {
@@ -29,6 +31,9 @@ namespace ShowCase
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddDbContext<ShowCaseDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings:ShowCaseDbContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
