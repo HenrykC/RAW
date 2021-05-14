@@ -1,4 +1,4 @@
-﻿using ShowCase.Models;
+﻿using ShowCase.Examples.Models;
 using System.Collections.Generic;
 
 namespace ShowCase.Examples.Repository

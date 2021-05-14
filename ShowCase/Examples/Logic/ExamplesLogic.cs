@@ -1,5 +1,5 @@
-﻿using ShowCase.Examples.Repository;
-using ShowCase.Models;
+﻿using ShowCase.Examples.Models;
+using ShowCase.Examples.Repository;
 using System.Collections.Generic;
 
 namespace ShowCase.Examples.Logic

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShowCase.Models;
-using ShowCase.Models.Database;
+using ShowCase.Examples.Models;
+using ShowCase.Examples.Models.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;

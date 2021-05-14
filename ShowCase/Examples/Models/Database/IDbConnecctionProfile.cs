@@ -1,4 +1,4 @@
-﻿namespace ShowCase.Models.Database
+﻿namespace ShowCase.Examples.Models.Database
 {
     public interface IDbConnecctionProfile
     {

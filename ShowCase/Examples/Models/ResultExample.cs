@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShowCase.Models
+namespace ShowCase.Examples.Models
 {
     public class ResultExample
     {

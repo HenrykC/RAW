@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShowCase.Models.Database
+namespace ShowCase.Examples.Models.Database
 {
     public class DbConnecctionProfile : IDbConnecctionProfile
     {

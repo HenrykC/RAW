@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ShowCase.Examples.Models;
 
-namespace ShowCase.Models.Database
+namespace ShowCase.Examples.Models.Database
 {
     public class ShowCaseDbContext : DbContext
     {
@@ -180,10 +181,10 @@ namespace ShowCase.Models.Database
                                     "Response Status -><br>" +
                                     "<b>503</b> Service Unavailable",
 
-                               Description = "Note: Do not return a 4XX<br>"+
-                                             "error status if the error comes<br>"+
-                                             "from the server — it is highly<br>"+
-                                             "confusing and will drive your<br>"+
+                               Description = "Note: Do not return a 4XX<br>" +
+                                             "error status if the error comes<br>" +
+                                             "from the server — it is highly<br>" +
+                                             "confusing and will drive your<br>" +
                                              "users completely insane!"
                            });
 

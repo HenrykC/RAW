@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShowCase.Examples.Logic;
-using ShowCase.Models;
+using ShowCase.Examples.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

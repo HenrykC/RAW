@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShowCase.Models
+namespace ShowCase.Examples.Models
 {
     public class Example
     {
@@ -14,7 +14,7 @@ namespace ShowCase.Models
         public string WorstPractice { get; set; }
 
         public string Name { get; set; }
-      
+
         public string Description { get; set; }
     }
 }

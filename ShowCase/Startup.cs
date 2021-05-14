@@ -7,9 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShowCase.Examples.Logic;
+using ShowCase.Examples.Models.Database;
 using ShowCase.Examples.Repository;
 using ShowCase.Exceptions.Handler;
-using ShowCase.Models.Database;
 
 namespace ShowCase
 {
@@ -88,15 +88,13 @@ namespace ShowCase
                 }
             });
 
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<ShowCaseDbContext>();
-                
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider.GetRequiredService<ShowCaseDbContext>();
 
-                context.Database.Migrate();
-            }
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            context.Database.Migrate();
         }
 
         private IDbConnecctionProfile GetDbConnection()
