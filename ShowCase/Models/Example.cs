@@ -9,11 +9,12 @@ namespace ShowCase.Models
     {
         public int Id { get; set; }
 
-        public string RequestVerb { get; set; }
-        public string RequestPath { get; set; }
+        public string BestPractice { get; set; }
 
-        public string ResponseCode { get; set; }
-        public string ResponseText { get; set; }
-        public string ResponseBody { get; set; }
+        public string WorstPractice { get; set; }
+
+        public string Name { get; set; }
+      
+        public string Description { get; set; }
     }
 }

@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShowCase.Examples.Logic;
+using ShowCase.Examples.Repository;
 using ShowCase.Exceptions.Handler;
 using ShowCase.Models.Database;
 
@@ -15,6 +17,7 @@ namespace ShowCase
     {
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -32,8 +35,12 @@ namespace ShowCase
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddDbContext<ShowCaseDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings:ShowCaseDbContext")));
+            var connectionString = Configuration["ConnectionStrings:RawDb"];
+            services.AddDbContext<ShowCaseDbContext>(options => options.UseSqlite(connectionString));
+
+            services.AddTransient<IExamplesLogic, ExamplesLogic>();
+            services.AddTransient<IExamplesRepository, ExamplesRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +79,26 @@ namespace ShowCase
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ShowCaseDbContext>();
+                
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                context.Database.Migrate();
+            }
+        }
+
+        private IDbConnecctionProfile GetDbConnection()
+        {
+            var dbConnection = new DbConnecctionProfile()
+            {
+                ConnectionString = Configuration.GetConnectionString("ConnectionStrings:ShowCaseDbContext")
+            };
+
+            return dbConnection;
         }
     }
 }
