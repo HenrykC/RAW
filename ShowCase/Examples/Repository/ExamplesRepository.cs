@@ -17,11 +17,49 @@ namespace ShowCase.Examples.Repository
             this.dbContextOptions = dbContextOptions;
         }
 
+        public ResultExample AddExamples(Example example)
+        {
+            using var dbContext = new ShowCaseDbContext(dbContextOptions);
+            dbContext.Add(example);
+            if (dbContext.SaveChanges() != 1)
+            {
+                throw new Exception();
+            }
+
+            return new ResultExample() { Self = example.Id.ToString() };
+        }
+
+        public bool DeleteExamples(int id)
+        {
+            using var dbContext = new ShowCaseDbContext(dbContextOptions);
+            var data = dbContext.Examples.Where(w => w.Id == id).FirstOrDefault();
+            if (data == null || data.Id == 0)
+            {
+                throw new Exception();
+            }
+
+            dbContext.Remove(data);
+            dbContext.SaveChanges();
+
+            return true;
+        }
+
+        public Example GetExample(int id)
+        {
+            using var dbContext = new ShowCaseDbContext(dbContextOptions);
+            return dbContext.Examples.AsNoTracking().FirstOrDefault(w => w.Id == id);
+        }
+
         public IList<Example> GetExamples()
         {
-            var dbContext = new ShowCaseDbContext(dbContextOptions);
+            using var dbContext = new ShowCaseDbContext(dbContextOptions);
 
             return dbContext.Examples.ToList();
+        }
+
+        public Example UpdateExample(Example example)
+        {
+            throw new NotImplementedException();
         }
     }
 }
