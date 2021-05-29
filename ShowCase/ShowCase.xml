@@ -25,6 +25,15 @@
             <summary>
             Adds a new Example to the Database.
             </summary>
+            <remarks>    
+            Sample request:     
+            {    
+            "id": 1,    
+            "name": "Item1",    
+            "isComplete": true    
+            }    
+               
+            </remarks>
             <param name="example">Example that should be added to the DB</param>
             <returns></returns>
             <response code="201">Returns the newly created object in body and location in header</response> 
@@ -44,6 +53,7 @@
             <summary>
             Updates a given Example (patch).
             </summary>
+            <remarks>This is a remark</remarks>
             <param name="id">Id of the Example</param>
             <param name="example">New values of the example</param>
             <response code="200">Request was successfull.</response>
@@ -55,6 +65,7 @@
             Deletes a given Example.
             </summary>
             <param name="id">Example Id</param>
+            <remarks>This is a remark</remarks>
             <returns></returns>
             <response code="204">Deletion was successfull</response>
             <response code="400">An error occured while deleting the object.</response>
