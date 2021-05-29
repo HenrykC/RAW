@@ -11,6 +11,9 @@ using ShowCase.Examples.Models.Database;
 using ShowCase.Examples.Repository;
 using ShowCase.Exceptions.Handler;
 using Microsoft.OpenApi.Models;
+using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace ShowCase
 {
@@ -38,9 +41,22 @@ namespace ShowCase
 
             var connectionString = Configuration["ConnectionStrings:RawDb"];
             services.AddDbContext<ShowCaseDbContext>(options => options.UseSqlite(connectionString));
-
-            services.AddTransient<IExamplesLogic, ExamplesLogic>();
+                       services.AddTransient<IExamplesLogic, ExamplesLogic>();
             services.AddTransient<IExamplesRepository, ExamplesRepository>();
+
+            services.AddApiVersioning(config =>
+            {
+                // Specify the default API Version
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                // If the client hasn't specified the API version in the request, use the default API version number 
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                // Advertise the API versions supported for the particular endpoint
+                config.ReportApiVersions = true;
+                // Versioning using media type
+                config.ApiVersionReader = new MediaTypeApiVersionReader("v");
+            });
+
+
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -75,7 +91,8 @@ namespace ShowCase
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Example API V1");
+               // c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Example API v1.1");
 
             });
 
@@ -92,6 +109,10 @@ namespace ShowCase
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                
+                //endpoints.MapControllerRoute(
+                //   name: "defaultVersion",
+                //   pattern: "api/v{version:apiVersion}/{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
