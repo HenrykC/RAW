@@ -32,11 +32,15 @@ namespace ShowCase.Exceptions.Handler
                 case UserException:
                     statusCode = HttpStatusCode.OK;
                     break;
+
+                case InvalidModelException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    break;
             }
 
             var error = new Error()
             {
-                Code = exception is IError ? ((IError) exception).Code : 0,
+                Code = exception is IError ? ((IError)exception).Code : 0,
                 Message = exception.Message
 
             };

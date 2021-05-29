@@ -17,16 +17,16 @@ namespace ShowCase.Examples.Repository
             this.dbContextOptions = dbContextOptions;
         }
 
-        public ResultExample AddExamples(Example example)
+        public Example AddExamples(Example example)
         {
             using var dbContext = new ShowCaseDbContext(dbContextOptions);
             dbContext.Add(example);
             if (dbContext.SaveChanges() != 1)
             {
-                throw new Exception();
+                throw new Exception(); //CouldNotSaveExeption
             }
 
-            return new ResultExample() { Self = example.Id.ToString() };
+            return dbContext.Examples.Single(e => e.Id == example.Id);
         }
 
         public bool DeleteExamples(int id)

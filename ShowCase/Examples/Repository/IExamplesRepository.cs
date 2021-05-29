@@ -8,7 +8,7 @@ namespace ShowCase.Examples.Repository
         Example GetExample(int id);
         IList<Example> GetExamples();
         bool DeleteExamples(int id);
-        ResultExample AddExamples(Example example);
+        Example AddExamples(Example example);
         Example UpdateExample(Example example);
     }
 }

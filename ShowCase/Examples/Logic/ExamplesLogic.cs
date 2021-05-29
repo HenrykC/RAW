@@ -13,7 +13,7 @@ namespace ShowCase.Examples.Logic
             this.examplesRepository = examplesRepository;
         }
 
-        public ResultExample AddExamples(Example example)
+        public Example AddExamples(Example example)
         {
             return examplesRepository.AddExamples(example);
         }

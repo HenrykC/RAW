@@ -32,11 +32,15 @@ namespace ShowCase.Controllers
             return Ok(examplesLogic.GetExample(id));
         }
 
-        // POST api/<ExamplesController>
         [HttpPost]
         public ObjectResult Post([FromBody] Example example)
         {
-            return Created(examplesLogic.AddExamples(example).Self, example);
+            example.ValidatePostParameter();
+
+            var result = examplesLogic.AddExamples(example);
+            var location = $"{Request.Scheme}://{Request.Host.Value}{Request.Path}/{result.Id}";
+
+            return Created(location, result);
         }
 
         // PUT api/<ExamplesController>/5
