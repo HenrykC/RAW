@@ -17,12 +17,21 @@ namespace ShowCase.Controllers
             this.examplesLogic = examplesLogic;
         }
 
+        /// <summary>
+        /// Retrieves all Examples.
+        /// </summary>
+        /// <returns>All Examples in Json format.</returns>
         [HttpGet]
         public ObjectResult GetExamples()
         {
             return Ok(examplesLogic.GetExamples());
         }
 
+        /// <summary>
+        /// Retrieves one Example specified by the Id.
+        /// </summary>
+        /// <param name="id">Example Id</param>
+        /// <returns>Specified Example in Json format</returns>
         [HttpGet("{id}")]
         public ObjectResult Get(int id)
         {
@@ -32,6 +41,11 @@ namespace ShowCase.Controllers
             return Ok(examplesLogic.GetExample(id)); //200
         }
 
+        /// <summary>
+        /// Adds a new Example to the Database.
+        /// </summary>
+        /// <param name="example">Example that should be added to the DB</param>
+        /// <returns></returns>
         [HttpPost]
         public ObjectResult AddExample([FromBody] Example example)
         {
@@ -43,6 +57,12 @@ namespace ShowCase.Controllers
             return Created(location, result); //201
         }
 
+        /// <summary>
+        /// Updates a given Example (put).
+        /// </summary>
+        /// <param name="id">Id of the Example</param>
+        /// <param name="example">New values of the example</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public NoContentResult Put(int id, [FromBody] Example example)
         {
@@ -52,7 +72,12 @@ namespace ShowCase.Controllers
             return NoContent(); //204
         }
 
-
+        /// <summary>
+        /// Updates a given Example (patch).
+        /// </summary>
+        /// <param name="id">Id of the Example</param>
+        /// <param name="example">New values of the example</param>
+        /// <returns></returns>
         // PUT api/<ExamplesController>/5
         [HttpPatch("{id}")]
         public ObjectResult Patch(int id, [FromBody] Example example)
@@ -63,6 +88,11 @@ namespace ShowCase.Controllers
             return Ok(result); //200
         }
 
+        /// <summary>
+        /// Deletes a given Example.
+        /// </summary>
+        /// <param name="id">Example Id</param>
+        /// <returns></returns>
         // DELETE api/<ExamplesController>/5
         [HttpDelete("{id}")]
         public NoContentResult Delete(int id)

@@ -10,6 +10,7 @@ using ShowCase.Examples.Logic;
 using ShowCase.Examples.Models.Database;
 using ShowCase.Examples.Repository;
 using ShowCase.Exceptions.Handler;
+using Microsoft.OpenApi.Models;
 
 namespace ShowCase
 {
@@ -41,7 +42,21 @@ namespace ShowCase
             services.AddTransient<IExamplesLogic, ExamplesLogic>();
             services.AddTransient<IExamplesRepository, ExamplesRepository>();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1"
+                    ,Title = "Example API"
+                    ,TermsOfService = new System.Uri("https://www.example.com/")
+                    ,Contact = new OpenApiContact
+                    {
+                        Name = "Example GmbH"
+                        ,Email = "support@example.com"
+                        ,Url = new System.Uri("https://www.example.com/")
+                    }
+
+                });
+             });              
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +76,7 @@ namespace ShowCase
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+
             });
 
             app.UseExceptionHandler(ex => ex.Run(ExceptionHandler.Handle));
