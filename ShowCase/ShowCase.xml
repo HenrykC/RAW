@@ -4,5 +4,60 @@
         <name>ShowCase</name>
     </assembly>
     <members>
+        <member name="M:ShowCase.Controllers.ExamplesController.GetExamples">
+            <summary>
+            Retrieves all Examples.
+            </summary>
+            <returns>All Examples in Json format.</returns>
+            <response code="200">Request was successfull.</response>
+            <response code="400">An error occured while retrieving the objects.</response>
+        </member>
+        <member name="M:ShowCase.Controllers.ExamplesController.Get(System.Int32)">
+            <summary>
+            Retrieves one Example specified by the Id.
+            </summary>
+            <param name="id">Example Id</param>
+            <returns>Specified Example in Json format</returns>
+            <response code="200">Request was successfull.</response>
+            <response code="400">An error occured while retrieving the object.</response>
+        </member>
+        <member name="M:ShowCase.Controllers.ExamplesController.AddExample(ShowCase.Examples.Models.Example)">
+            <summary>
+            Adds a new Example to the Database.
+            </summary>
+            <param name="example">Example that should be added to the DB</param>
+            <returns></returns>
+            <response code="201">Returns the newly created object in body and location in header</response> 
+            <response code="400">An error occured while creating the object.</response>
+        </member>
+        <member name="M:ShowCase.Controllers.ExamplesController.Put(System.Int32,ShowCase.Examples.Models.Example)">
+            <summary>
+            Updates a given Example (put).
+            </summary>
+            <param name="id">Id of the Example</param>
+            <param name="example">New values of the example</param>
+            <returns></returns>
+            <response code="204">Update was successfull.</response>
+            <response code="400">An error occured while updating the object.</response>
+        </member>
+        <member name="M:ShowCase.Controllers.ExamplesController.Patch(System.Int32,ShowCase.Examples.Models.Example)">
+            <summary>
+            Updates a given Example (patch).
+            </summary>
+            <param name="id">Id of the Example</param>
+            <param name="example">New values of the example</param>
+            <response code="200">Request was successfull.</response>
+            <response code="400">An error occured while updating the object.</response>
+            <returns></returns>
+        </member>
+        <member name="M:ShowCase.Controllers.ExamplesController.Delete(System.Int32)">
+            <summary>
+            Deletes a given Example.
+            </summary>
+            <param name="id">Example Id</param>
+            <returns></returns>
+            <response code="204">Deletion was successfull</response>
+            <response code="400">An error occured while deleting the object.</response>
+        </member>
     </members>
 </doc>
