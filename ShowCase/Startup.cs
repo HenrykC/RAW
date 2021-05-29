@@ -62,17 +62,21 @@ namespace ShowCase
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1"
-                    ,Title = "Example API"
-                    ,TermsOfService = new System.Uri("https://www.example.com/")
-                    ,Contact = new OpenApiContact
+                    , Title = "Example API"
+                    , TermsOfService = new System.Uri("https://www.example.com/")
+                    , Contact = new OpenApiContact
                     {
                         Name = "Example GmbH"
-                        ,Email = "support@example.com"
-                        ,Url = new System.Uri("https://www.example.com/")
+                        , Email = "support@example.com"
+                        , Url = new System.Uri("https://www.example.com/")
                     }
 
                 });
-             });              
+                // Set documentation path - extra complicated to make it generic                          
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });              
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
