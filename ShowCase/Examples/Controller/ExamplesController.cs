@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShowCase.Examples.Logic;
 using ShowCase.Examples.Models;
+using ShowCase.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,40 +22,61 @@ namespace ShowCase.Controllers
         }
 
         [HttpGet]
-        public IList<Example> GetExamples()
+        public ObjectResult GetExamples()
         {
-            return examplesLogic.GetExamples();
+            return Ok(examplesLogic.GetExamples());
         }
 
         [HttpGet("{id}")]
         public ObjectResult Get(int id)
         {
-            return Ok(examplesLogic.GetExample(id));
+            if (id <= 0)
+                throw new InvalidModelException(2000, "Id can´t be lower than 1");
+
+            return Ok(examplesLogic.GetExample(id)); //200
         }
 
         [HttpPost]
-        public ObjectResult Post([FromBody] Example example)
+        public ObjectResult AddExample([FromBody] Example example)
         {
             example.ValidatePostParameter();
 
             var result = examplesLogic.AddExamples(example);
             var location = $"{Request.Scheme}://{Request.Host.Value}{Request.Path}/{result.Id}";
 
-            return Created(location, result);
+            return Created(location, result); //201
         }
 
-        // PUT api/<ExamplesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Example example)
+        public NoContentResult Put(int id, [FromBody] Example example)
         {
+            example.ValidatePatchParameter();
+            examplesLogic.UpdateExample(example);
+           
+            return NoContent(); //204
+        }
 
+
+        // PUT api/<ExamplesController>/5
+        [HttpPatch("{id}")]
+        public ObjectResult Patch(int id, [FromBody] Example example)
+        {
+            example.ValidatePatchParameter();
+            var result = examplesLogic.UpdateExample(example);
+
+            return Ok(result); //200
         }
 
         // DELETE api/<ExamplesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public NoContentResult Delete(int id)
         {
+            if (id <= 0)
+                throw new InvalidModelException(2000, "Id can´t be lower than 1");
 
+            examplesLogic.DeleteExamples(id);
+
+            return NoContent(); // 204
         }
     }
 }
