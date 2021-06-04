@@ -14,6 +14,9 @@ using Microsoft.OpenApi.Models;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using System.IO;
+using System.Reflection;
+using System.Linq;
 
 namespace ShowCase
 {
@@ -53,7 +56,7 @@ namespace ShowCase
                 // Advertise the API versions supported for the particular endpoint
                 config.ReportApiVersions = true;
                 // Versioning using media type
-                config.ApiVersionReader = new MediaTypeApiVersionReader("v");
+                config.ApiVersionReader = new MediaTypeApiVersionReader("version");
             });
 
 
@@ -76,6 +79,8 @@ namespace ShowCase
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });              
         }
 
@@ -84,7 +89,7 @@ namespace ShowCase
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+               app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -95,7 +100,7 @@ namespace ShowCase
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Example API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Example API V1");
                // c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Example API v1.1");
 
             });
@@ -113,7 +118,7 @@ namespace ShowCase
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                
+
                 //endpoints.MapControllerRoute(
                 //   name: "defaultVersion",
                 //   pattern: "api/v{version:apiVersion}/{controller}/{action=Index}/{id?}");

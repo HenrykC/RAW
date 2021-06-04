@@ -33,7 +33,7 @@ namespace ShowCase.Controllers
         /// <param name="id">Example Id</param>
         /// <returns>Specified Example in Json format</returns>
         [HttpGet("{id}")]
-        public ObjectResult Get(int id)
+        public ObjectResult Get(int id, [FromBody] string test)
         {
             if (id <= 0)
                 throw new InvalidModelException(2000, "Id can´t be lower than 1");
@@ -52,6 +52,7 @@ namespace ShowCase.Controllers
             example.ValidatePostParameter();
 
             var result = examplesLogic.AddExamples(example);
+
             var location = $"{Request.Scheme}://{Request.Host.Value}{Request.Path}/{result.Id}";
 
             return Created(location, result); //201

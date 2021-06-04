@@ -26,7 +26,7 @@ namespace ShowCase.Examples.Repository
                 throw new Exception(); //CouldNotSaveExeption
             }
 
-            return dbContext.Examples.Single(e => e.Id == example.Id);
+            return dbContext.Examples.Single(e => e.Id == example.Id); // Throw customex
         }
 
         public bool DeleteExamples(int id)
